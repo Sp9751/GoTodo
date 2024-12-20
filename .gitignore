@@ -1,0 +1,41 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of the build process
+bin/
+build/
+
+# Dependency directories (if using vendoring)
+vendor/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.out
+
+# Go test coverage files
+*.cover
+*.coverage
+
+# IDE/editor configurations
+.vscode/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Configuration and sensitive files
+.env
+*.env.*
+config.yaml
+config.json
+
+# Module and dependency caches
+/go/

@@ -6,6 +6,12 @@
 *.dylib
 *.test
 
+
+node_modules
+dist
+dist-ssr
+*.local
+
 # Output of the build process
 bin/
 build/

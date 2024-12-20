@@ -24,9 +24,11 @@ var collection *mongo.Collection
 
 func main (){
 	app:= fiber.New()
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("error loading .env:", err)
+	if os.Getenv("ENV") != "production" {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("error loading .env:", err)
+		}
 	}
 	PORT := os.Getenv("PORT")
 	DB_URI := os.Getenv("DB_URI")
@@ -51,12 +53,25 @@ func main (){
 
 	collection = client.Database("goTodo").Collection("todos")
 
+	// app.Use(cors.New(cors.Config{
+    //     AllowOrigins: "http://localhost:5173",
+	// 	AllowHeaders: "Origin,Content-Type,Accept",
+    // }))
+
 	app.Get("/api/todo", getTodos)
 	app.Post("/api/todo", createTodo)
 	app.Patch("/api/todo/:id", updateTodo)
 	app.Delete("/api/todo/:id", deleteTodo)
 
-	app.Listen(":"+PORT)
+	if PORT == ""{
+		PORT = "8000"
+	}
+
+	if os.Getenv("ENV") == "production" {
+		app.Static("/", "./client/dist")
+	}
+
+	log.Fatal(app.Listen("0.0.0.0:"+PORT))
 }
 
 func getTodos (c *fiber.Ctx)error {
